@@ -3,11 +3,16 @@ package com.nilsonsasaki.composablebasicscodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.nilsonsasaki.composablebasicscodelab.ui.theme.ComposableBasicsCodelabTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,11 +20,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposableBasicsCodelabTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+                MyApp()
             }
+        }
+    }
+}
+
+@Composable
+fun MyApp(
+    names: List<String> = listOf("World", "Compose")
+) {
+    Column {
+        for (name in names) {
+            Greeting(name = name)
         }
     }
 }
@@ -27,15 +40,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Surface(color = MaterialTheme.colors.primary) {
-        Text(text = "Hello $name!")
+        Column(modifier = Modifier.padding(24.dp)) {
+            Text(text = "Hello,")
+            Text(text = name)
+        }
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposableBasicsCodelabTheme {
-        Greeting("Android")
+        MyApp()
     }
 }
