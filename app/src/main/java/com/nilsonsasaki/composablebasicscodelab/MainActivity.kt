@@ -82,9 +82,13 @@ fun Greetings(names: List<String> = List(1000) { "$it" }) {
 @Composable
 fun Greeting(name: String) {
     val expanded = remember { mutableStateOf(false) }
-    val extraPadding by animateDpAsState(if (expanded.value) 48.dp else 0.dp,
-    animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy,
-    stiffness = Spring.StiffnessLow))
+    val extraPadding by animateDpAsState(
+        if (expanded.value) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
 
     Surface(
         color = MaterialTheme.colors.primary,
@@ -105,6 +109,7 @@ fun Greeting(name: String) {
         }
     }
 }
+
 @Preview(
     showBackground = true,
     widthDp = 320,
