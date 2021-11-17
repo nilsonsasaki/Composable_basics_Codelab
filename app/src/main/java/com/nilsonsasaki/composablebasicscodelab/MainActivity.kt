@@ -24,20 +24,19 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(
-    names: List<String> = listOf("World", "Compose")
-) {
-    Column {
-        for (name in names) {
-            Greeting(name = name)
-        }
+fun MyApp() {
+
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+
+    if (shouldShowOnboarding) {
+        OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
+    } else {
+        Greetings()
     }
 }
 
 @Composable
-fun OnboardingScreen() {
-    //TODO: This state should be hoisted
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+fun OnboardingScreen(onContinueClicked: () -> Unit) {
 
     Surface() {
         Column(
@@ -48,18 +47,28 @@ fun OnboardingScreen() {
             Text(text = "Welcome to the Basics Codelab!")
             Button(
                 modifier = Modifier.padding(vertical = 24.dp),
-                onClick = { shouldShowOnboarding = false }) {
+                onClick = onContinueClicked
+            ) {
                 Text(text = "Continue")
             }
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun OnboardingPreview(){
+fun OnboardingPreview() {
     ComposableBasicsCodelabTheme {
-        OnboardingScreen()
+        OnboardingScreen(onContinueClicked = {})
+    }
+}
+
+@Composable
+fun Greetings(names: List<String> = listOf("World", "Compose")) {
+    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+        for (name in names) {
+            Greeting(name = name)
+        }
     }
 }
 
